@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script src="config.js"></script>
+    <script> 
+       function ajax(){
+           var input = document.getElementById('search').value;
+           var promise = fetch(urls.search(input));
+           promise.then(
+               response=>response.json().then(
+                   data=>playerPid(data.data)).catch(
+                       err=> console.log(err)));
+       }   
+
+    function playerPid(data){
+        console.log(data[0].pid);
+            var promise1 = fetch(urls.playerstats(data[0].pid));
+            promise1.then(
+                response=>response.json().then(data=> playerStats(data)).catch(err=> console.log(err)));
+    }
+
+    function playerStats(data){
+        var ul = document.getElementById('playerstats');
+        ul.innerHTML='';
+        var span = document.createElement('span');
+        var img = document.createElement('img');
+        span.className='name';
+        span.innerText=data.name;
+        img.src=data.imageURL;
+        img.className='image';
+        ul.appendChild(img);
+        ul.appendChild(span);
+        biodata(data);
+        majorteams(data);
+        battingStats(data.data.batting);
+        bowlingStats(data.data.bowling);
+    }
+
+    function biodata(data){
+        console.log(data);
+        var div = document.getElementById('biodata');
+        div.innerHTML='';
+        var li1 = document.createElement('li');
+        var li2 = document.createElement('li');
+        var li3 = document.createElement('li');
+        var li4 = document.createElement('li');
+        var li5 = document.createElement('li');
+        var li6 = document.createElement('li');
+        var li7 = document.createElement('li');
+        var li8 = document.createElement('li');
+        li1.innerHTML = '<b>PROFILE :</b>'+'<br>'+'<br>'+data.profile;
+        li2.innerHTML = '<b>FULLNAME :</b>'+'     '+data.fullName;
+        li3.innerHTML = '<b>COUNTRY     :</b>'+'     '+data.country;
+        li4.innerHTML = '<b>BORN     :</b>'+'     '+data.born;
+        li5.innerHTML = '<b>CURRENTAGE     :</b>'+'     '+data.currentAge;
+        li6.innerHTML = '<b>BATTINGSTYLE   :</b>'+'     '+data.battingStyle;
+        li7.innerHTML = '<b>BOWLINGSTYLE     :</b>'+'     '+data.bowlingStyle;
+        li8.innerHTML = '<b>PLAYERROLE     :</b>'+'     '+data.playingRole;
+        div.appendChild(li1); 
+        div.appendChild(li2);
+        div.appendChild(li3);
+        div.appendChild(li4);
+        div.appendChild(li5);
+        div.appendChild(li6);
+        div.appendChild(li7);
+        div.appendChild(li8);
+   } 
+
+   function majorteams(data){
+       var div = document.getElementById('majorteams');
+       div.innerHTML='';
+       var span = document.createElement('span');
+       span.innerHTML = '<b>MAJOR TEAMS :</b>'+'<br>'+data.majorTeams;
+       div.appendChild(span);
+   }
+
+   function battingStats(data){
+       console.log(data);
+       var table = document.getElementById('batting');
+    
+       var tr = document.createElement('tr');
+       var td1 = document.createElement('td');
+       var td2 = document.createElement('td');
+       var td3 = document.createElement('td');
+       var td4 = document.createElement('td');
+       var td5 = document.createElement('td');
+       var td6 = document.createElement('td');
+       var td7 = document.createElement('td');
+       var td8 = document.createElement('td');
+       var td9 = document.createElement('td');
+       var td10 = document.createElement('td');
+       var td11 = document.createElement('td');
+       var td12 = document.createElement('td');
+       var td13 = document.createElement('td');
+       var td14 = document.createElement('td');
+       td1.innerText= 'ODIs';
+       td2.innerHTML = data.ODIs.Mat;
+       td3.innerHTML = data.ODIs.Inns;
+       td4.innerHTML = data.ODIs.Runs;
+       td5.innerHTML = data.ODIs['50'];
+       td6.innerHTML = data.ODIs['100'];
+       td7.innerHTML = data.ODIs['4s'];
+       td8.innerHTML = data.ODIs['6s'];
+       td9.innerHTML = data.ODIs.SR;
+       td10.innerHTML = data.ODIs.Ave;
+       td11.innerHTML = data.ODIs.HS;
+       td12.innerHTML = data.ODIs.St;
+       td13.innerHTML = data.ODIs.Ct;
+       td14.innerHTML = data.ODIs.NO;
+       table.appendChild(tr);
+       tr.appendChild(td1);
+       tr.appendChild(td2);
+       tr.appendChild(td3);
+       tr.appendChild(td4); 
+       tr.appendChild(td5);
+       tr.appendChild(td6);
+       tr.appendChild(td7);
+       tr.appendChild(td8); 
+       tr.appendChild(td9);
+       tr.appendChild(td10);
+       tr.appendChild(td11);
+       tr.appendChild(td12); 
+       tr.appendChild(td13);
+       tr.appendChild(td14);
+       var tr = document.createElement('tr');
+       var td15 = document.createElement('td');
+       var td16 = document.createElement('td');
+       var td17 = document.createElement('td');
+       var td18 = document.createElement('td');
+       var td19 = document.createElement('td');
+       var td20 = document.createElement('td');
+       var td21 = document.createElement('td');
+       var td22 = document.createElement('td');
+       var td23 = document.createElement('td');
+       var td24 = document.createElement('td');
+       var td25 = document.createElement('td');
+       var td26 = document.createElement('td');
+       var td27 = document.createElement('td');
+       var td28 = document.createElement('td');
+       td15.innerText= 'T20Is';
+       td16.innerHTML = data.T20Is.Mat;
+       td17.innerHTML = data.T20Is.Inns;
+       td18.innerHTML = data.T20Is.Runs;
+       td19.innerHTML = data.T20Is['50'];
+       td20.innerHTML = data.T20Is['100'];
+       td21.innerHTML = data.T20Is['4s'];
+       td22.innerHTML = data.T20Is['6s'];
+       td23.innerHTML = data.T20Is.SR;
+       td24.innerHTML = data.T20Is.Ave;
+       td25.innerHTML = data.T20Is.HS;
+       td26.innerHTML = data.T20Is.St;
+       td27.innerHTML = data.T20Is.Ct;
+       td28.innerHTML = data.T20Is.NO;
+       table.appendChild(tr);
+       tr.appendChild(td15);
+       tr.appendChild(td16);
+       tr.appendChild(td17);
+       tr.appendChild(td18); 
+       tr.appendChild(td19);
+       tr.appendChild(td20);
+       tr.appendChild(td21);
+       tr.appendChild(td22); 
+       tr.appendChild(td23);
+       tr.appendChild(td24);
+       tr.appendChild(td25);
+       tr.appendChild(td26); 
+       tr.appendChild(td27);
+       tr.appendChild(td28);
+       var tr = document.createElement('tr');
+       var td29 = document.createElement('td');
+       var td30 = document.createElement('td');
+       var td31 = document.createElement('td');
+       var td32 = document.createElement('td');
+       var td33 = document.createElement('td');
+       var td34 = document.createElement('td');
+       var td35 = document.createElement('td');
+       var td36 = document.createElement('td');
+       var td37 = document.createElement('td');
+       var td38 = document.createElement('td');
+       var td39 = document.createElement('td');
+       var td40 = document.createElement('td');
+       var td41 = document.createElement('td');
+       var td42 = document.createElement('td');
+       td29.innerText= 'TESTS';
+       td30.innerHTML = data.tests.Mat;
+       td31.innerHTML = data.tests.Inns;
+       td32.innerHTML = data.tests.Runs;
+       td33.innerHTML = data.tests['50'];
+       td34.innerHTML = data.tests['100'];
+       td35.innerHTML = data.tests['4s'];
+       td36.innerHTML = data.tests['6s'];
+       td37.innerHTML = data.tests.SR;
+       td38.innerHTML = data.tests.Ave;
+       td39.innerHTML = data.tests.HS;
+       td40.innerHTML = data.tests.St;
+       td41.innerHTML = data.tests.Ct;
+       td42.innerHTML = data.tests.NO;
+       table.appendChild(tr);
+       tr.appendChild(td29);
+       tr.appendChild(td30);
+       tr.appendChild(td31);
+       tr.appendChild(td32); 
+       tr.appendChild(td33);
+       tr.appendChild(td34);
+       tr.appendChild(td35);
+       tr.appendChild(td36); 
+       tr.appendChild(td37);
+       tr.appendChild(td38);
+       tr.appendChild(td39);
+       tr.appendChild(td40); 
+       tr.appendChild(td41);
+       tr.appendChild(td42); 
+       var tr = document.createElement('tr');
+       var td43 = document.createElement('td');
+       var td44 = document.createElement('td');
+       var td45 = document.createElement('td');
+       var td46 = document.createElement('td');
+       var td47 = document.createElement('td');
+       var td48 = document.createElement('td');
+       var td49 = document.createElement('td');
+       var td50 = document.createElement('td');
+       var td51 = document.createElement('td');
+       var td52 = document.createElement('td');
+       var td53 = document.createElement('td');
+       var td54 = document.createElement('td');
+       var td55 = document.createElement('td');
+       var td56 = document.createElement('td');
+       td43.innerText= 'FIRSTCLASS';
+       td44.innerHTML = data.firstClass.Mat;
+       td45.innerHTML = data.firstClass.Inns;
+       td46.innerHTML = data.firstClass.Runs;
+       td47.innerHTML = data.firstClass['50'];
+       td48.innerHTML = data.firstClass['100'];
+       td49.innerHTML = data.firstClass['4s'];
+       td50.innerHTML = data.firstClass['6s'];
+       td51.innerHTML = data.firstClass.SR;
+       td52.innerHTML = data.firstClass.Ave;
+       td53.innerHTML = data.firstClass.HS;
+       td54.innerHTML = data.firstClass.St;
+       td55.innerHTML = data.firstClass.Ct;
+       td56.innerHTML = data.firstClass.NO;
+       table.appendChild(tr);
+       tr.appendChild(td43);
+       tr.appendChild(td44);
+       tr.appendChild(td45);
+       tr.appendChild(td46); 
+       tr.appendChild(td47);
+       tr.appendChild(td48);
+       tr.appendChild(td49);
+       tr.appendChild(td50); 
+       tr.appendChild(td51);
+       tr.appendChild(td52);
+       tr.appendChild(td53);
+       tr.appendChild(td54); 
+       tr.appendChild(td55);
+       tr.appendChild(td56);  
+       var tr = document.createElement('tr');
+       var td57 = document.createElement('td');
+       var td58 = document.createElement('td');
+       var td59 = document.createElement('td');
+       var td60 = document.createElement('td');
+       var td61 = document.createElement('td');
+       var td62 = document.createElement('td');
+       var td63 = document.createElement('td');
+       var td64 = document.createElement('td');
+       var td65 = document.createElement('td');
+       var td66 = document.createElement('td');
+       var td67 = document.createElement('td');
+       var td68 = document.createElement('td');
+       var td69 = document.createElement('td');
+       var td70 = document.createElement('td');
+       td57.innerText= 'LISTA';
+       td58.innerHTML = data.listA.Mat;
+       td59.innerHTML = data.listA.Inns;
+       td60.innerHTML = data.listA.Runs;
+       td61.innerHTML = data.listA['50'];
+       td62.innerHTML = data.listA['100'];
+       td63.innerHTML = data.listA['4s'];
+       td64.innerHTML = data.listA['6s'];
+       td65.innerHTML = data.listA.SR;
+       td66.innerHTML = data.listA.Ave;
+       td67.innerHTML = data.listA.HS;
+       td68.innerHTML = data.listA.St;
+       td69.innerHTML = data.listA.Ct;
+       td70.innerHTML = data.listA.NO;
+       table.appendChild(tr);
+       tr.appendChild(td57);
+       tr.appendChild(td58);
+       tr.appendChild(td59);
+       tr.appendChild(td60); 
+       tr.appendChild(td61);
+       tr.appendChild(td62);
+       tr.appendChild(td63);
+       tr.appendChild(td64); 
+       tr.appendChild(td65);
+       tr.appendChild(td66);
+       tr.appendChild(td67);
+       tr.appendChild(td68); 
+       tr.appendChild(td69);
+       tr.appendChild(td70);  
+   }
+   function bowlingStats(data){
+       console.log(data);
+       var table = document.getElementById('bowling');
+    
+       var tr = document.createElement('tr');
+       var td71 = document.createElement('td');
+       var td72= document.createElement('td');
+       var td73 = document.createElement('td');
+       var td74 = document.createElement('td');
+       var td75 = document.createElement('td');
+       var td76 = document.createElement('td');
+       var td77 = document.createElement('td');
+       var td78 = document.createElement('td');
+       var td79 = document.createElement('td');
+       var td80 = document.createElement('td');
+       var td81 = document.createElement('td');
+       var td82 = document.createElement('td');
+       var td83 = document.createElement('td');
+       var td84 = document.createElement('td');
+       td71.innerText= 'BOWLING';
+       td72.innerHTML = 'MATCHES';
+       td73.innerHTML = 'INNINGS';
+       td74.innerHTML = 'RUNS';
+       td75.innerHTML = 'FOURWKTS';
+       td76.innerHTML = 'FIVEWKTS';
+       td77.innerHTML = 'TENWKTS';
+       td78.innerHTML = 'BALLS';
+       td79.innerHTML = 'ECONOMY';
+       td80.innerHTML = 'SR';
+       td81.innerHTML = 'WKTS';
+       td82.innerHTML = 'BBI';
+       td83.innerHTML = 'BBM';
+       td84.innerHTML = 'AVERAGE';
+       table.appendChild(tr);
+       tr.appendChild(td71);
+       tr.appendChild(td72);
+       tr.appendChild(td73);
+       tr.appendChild(td74); 
+       tr.appendChild(td75);
+       tr.appendChild(td76);
+       tr.appendChild(td77);
+       tr.appendChild(td78); 
+       tr.appendChild(td79);
+       tr.appendChild(td80);
+       tr.appendChild(td81);
+       tr.appendChild(td82); 
+       tr.appendChild(td83);
+       tr.appendChild(td84);
+       var tr = document.createElement('tr');
+       var td85 = document.createElement('td');
+       var td86 = document.createElement('td');
+       var td87 = document.createElement('td');
+       var td88 = document.createElement('td');
+       var td89 = document.createElement('td');
+       var td90 = document.createElement('td');
+       var td91 = document.createElement('td');
+       var td92 = document.createElement('td');
+       var td93 = document.createElement('td');
+       var td94 = document.createElement('td');
+       var td95 = document.createElement('td');
+       var td96 = document.createElement('td');
+       var td97 = document.createElement('td');
+       var td98 = document.createElement('td');
+       td85.innerText= 'T20Is';
+       td86.innerHTML = data.T20Is.Mat;
+       td87.innerHTML = data.T20Is.Inns;
+       td88.innerHTML = data.T20Is.Runs;
+       td89.innerHTML = data.T20Is['50'];
+       td90.innerHTML = data.T20Is['100'];
+       td91.innerHTML = data.T20Is['4s'];
+       td92.innerHTML = data.T20Is['6s'];
+       td93.innerHTML = data.T20Is.SR;
+       td94.innerHTML = data.T20Is.Ave;
+       td95.innerHTML = data.T20Is.HS;
+       td96.innerHTML = data.T20Is.St;
+       td97.innerHTML = data.T20Is.Ct;
+       td98.innerHTML = data.T20Is.NO;
+       table.appendChild(tr);
+       tr.appendChild(td85);
+       tr.appendChild(td86);
+       tr.appendChild(td87);
+       tr.appendChild(td88); 
+       tr.appendChild(td89);
+       tr.appendChild(td90);
+       tr.appendChild(td91);
+       tr.appendChild(td92); 
+       tr.appendChild(td93);
+       tr.appendChild(td94);
+       tr.appendChild(td95);
+       tr.appendChild(td96); 
+       tr.appendChild(td97);
+       tr.appendChild(td98);
+       var tr = document.createElement('tr');
+       var td99 = document.createElement('td');
+       var td100 = document.createElement('td');
+       var td101 = document.createElement('td');
+       var td102 = document.createElement('td');
+       var td103 = document.createElement('td');
+       var td104 = document.createElement('td');
+       var td105 = document.createElement('td');
+       var td106 = document.createElement('td');
+       var td107 = document.createElement('td');
+       var td108 = document.createElement('td');
+       var td109 = document.createElement('td');
+       var td110 = document.createElement('td');
+       var td111 = document.createElement('td');
+       var td112 = document.createElement('td');
+       td99.innerText= 'TESTS';
+       td100.innerHTML = data.tests.Mat;
+       td101.innerHTML = data.tests.Inns;
+       td102.innerHTML = data.tests.Runs;
+       td103.innerHTML = data.tests['50'];
+       td104.innerHTML = data.tests['100'];
+       td105.innerHTML = data.tests['4s'];
+       td106.innerHTML = data.tests['6s'];
+       td107.innerHTML = data.tests.SR;
+       td108.innerHTML = data.tests.Ave;
+       td109.innerHTML = data.tests.HS;
+       td110.innerHTML = data.tests.St;
+       td111.innerHTML = data.tests.Ct;
+       td112.innerHTML = data.tests.NO;
+       table.appendChild(tr);
+       tr.appendChild(td99);
+       tr.appendChild(td100);
+       tr.appendChild(td101);
+       tr.appendChild(td102); 
+       tr.appendChild(td103);
+       tr.appendChild(td104);
+       tr.appendChild(td105);
+       tr.appendChild(td106); 
+       tr.appendChild(td107);
+       tr.appendChild(td108);
+       tr.appendChild(td109);
+       tr.appendChild(td110); 
+       tr.appendChild(td111);
+       tr.appendChild(td112); 
+       var tr = document.createElement('tr');
+       var td113 = document.createElement('td');
+       var td114 = document.createElement('td');
+       var td115 = document.createElement('td');
+       var td116 = document.createElement('td');
+       var td117 = document.createElement('td');
+       var td118 = document.createElement('td');
+       var td119 = document.createElement('td');
+       var td120 = document.createElement('td');
+       var td121 = document.createElement('td');
+       var td122 = document.createElement('td');
+       var td123 = document.createElement('td');
+       var td124 = document.createElement('td');
+       var td125 = document.createElement('td');
+       var td126 = document.createElement('td');
+       td113.innerText= 'FIRSTCLASS';
+       td114.innerHTML = data.firstClass.Mat;
+       td115.innerHTML = data.firstClass.Inns;
+       td116.innerHTML = data.firstClass.Runs;
+       td117.innerHTML = data.firstClass['50'];
+       td118.innerHTML = data.firstClass['100'];
+       td119.innerHTML = data.firstClass['4s'];
+       td120.innerHTML = data.firstClass['6s'];
+       td121.innerHTML = data.firstClass.SR;
+       td122.innerHTML = data.firstClass.Ave;
+       td123.innerHTML = data.firstClass.HS;
+       td124.innerHTML = data.firstClass.St;
+       td125.innerHTML = data.firstClass.Ct;
+       td126.innerHTML = data.firstClass.NO;
+       table.appendChild(tr);
+       tr.appendChild(td113);
+       tr.appendChild(td114);
+       tr.appendChild(td115);
+       tr.appendChild(td116); 
+       tr.appendChild(td117);
+       tr.appendChild(td118);
+       tr.appendChild(td119);
+       tr.appendChild(td120); 
+       tr.appendChild(td121);
+       tr.appendChild(td122);
+       tr.appendChild(td123);
+       tr.appendChild(td124); 
+       tr.appendChild(td125);
+       tr.appendChild(td126);  
+       var tr = document.createElement('tr');
+       var td127 = document.createElement('td');
+       var td128 = document.createElement('td');
+       var td129 = document.createElement('td');
+       var td130 = document.createElement('td');
+       var td131 = document.createElement('td');
+       var td132 = document.createElement('td');
+       var td133 = document.createElement('td');
+       var td134 = document.createElement('td');
+       var td135 = document.createElement('td');
+       var td136 = document.createElement('td');
+       var td137 = document.createElement('td');
+       var td138 = document.createElement('td');
+       var td139 = document.createElement('td');
+       var td140 = document.createElement('td');
+       td127.innerText= 'LISTA';
+       td128.innerHTML = data.listA.Mat;
+       td129.innerHTML = data.listA.Inns;
+       td130.innerHTML = data.listA.Runs;
+       td131.innerHTML = data.listA['50'];
+       td132.innerHTML = data.listA['100'];
+       td133.innerHTML = data.listA['4s'];
+       td134.innerHTML = data.listA['6s'];
+       td135.innerHTML = data.listA.SR;
+       td136.innerHTML = data.listA.Ave;
+       td137.innerHTML = data.listA.HS;
+       td138.innerHTML = data.listA.St;
+       td139.innerHTML = data.listA.Ct;
+       td140.innerHTML = data.listA.NO;
+       table.appendChild(tr);
+       tr.appendChild(td127);
+       tr.appendChild(td128);
+       tr.appendChild(td129);
+       tr.appendChild(td130); 
+       tr.appendChild(td131);
+       tr.appendChild(td132);
+       tr.appendChild(td133);
+       tr.appendChild(td134); 
+       tr.appendChild(td135);
+       tr.appendChild(td136);
+       tr.appendChild(td137);
+       tr.appendChild(td138); 
+       tr.appendChild(td139);
+       tr.appendChild(td140);  
+   }
+
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="parent">
+    <div class="main">
+        <label>ENTER PLAYER NAME:</label>
+        <input type="text" id="search" placeholder="PLAYER NAME">
+        <button onclick="ajax()">Search</button>
+        <ul id="playerstats">
+
+        </ul>
+        <div id="biodata">
+          
+        </div>
+        <div id="majorteams">
+
+        </div>
+        <table id="batting">
+            <p class="batting">-: BATTING :-</p>
+            <tr>
+                <td>BATTING</td>
+                <td>MATCHES</td>
+                <td>INNINGS</td>
+                <td>RUNS</td>
+                <td>FIFTIES</td>
+                <td>HUNDREDS</td>
+                <td>FOURS</td>
+                <td>SIXES</td>
+                <td>SR</td>
+                <td>AVERAGE</td>
+                <td>HIGEST</td>
+                <td>STUMPS</td>
+                <td>CATCHES</td>
+                <td>ORDER</td>
+            </tr>
+        </table>
+        <table id="bowling">
+                <p class="bowling">-: BOWLING :-</p>
+                
+            </table>
+    </div>    
+    </div>
+</body>
+</html>
